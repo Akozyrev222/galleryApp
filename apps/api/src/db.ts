@@ -2,7 +2,7 @@ import { Database, Service, ServiceOptions, IDocument } from '@paralect/node-mon
 
 import config from 'config';
 
-const database = new Database(config.mongo.connection, config.mongo.dbName);
+const database = new Database('mongodb+srv://admin:Kombatstan2000@cluster0.ofommlk.mongodb.net/?retryWrites=true&w=majority', 'Gallery');
 database.connect();
 
 class CustomService<T extends IDocument> extends Service<T> {

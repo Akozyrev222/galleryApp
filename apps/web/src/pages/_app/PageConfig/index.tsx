@@ -42,25 +42,26 @@ const PageConfig: FC<PageConfigProps> = ({ children }) => {
   if (isAccountLoading) return null;
 
   const { scope, layout } = routesConfiguration[route as RoutePath] || {};
-  const Scope = scope ? scopeToComponent[scope] : Fragment;
-  const Layout = layout ? layoutToComponent[layout] : Fragment;
+  /*const Scope = scope ? scopeToComponent[scope] : Fragment;*/
+  /*const Layout = layout ? layoutToComponent[layout] : Fragment;*/
+  /*console.log(layoutToComponent[layout],'scope')*/
 
   if (scope === ScopeType.PRIVATE && !account) {
+    console.log('sign-in')
     push(RoutePath.SignIn);
     return null;
   }
 
   if (scope === ScopeType.PUBLIC && account) {
+    console.log('home')
     push(RoutePath.Home);
     return null;
   }
 
   return (
-    <Scope>
-      <Layout>
+      <MainLayout>
         {children}
-      </Layout>
-    </Scope>
+      </MainLayout>
   );
 };
 

@@ -33,6 +33,7 @@ async function validator(ctx: AppKoaContext<ValidatedData>, next: Next) {
 }
 
 async function handler(ctx: AppKoaContext<ValidatedData>) {
+  console.log(ctx.validatedData)
   const {
     firstName,
     lastName,
@@ -63,7 +64,6 @@ async function handler(ctx: AppKoaContext<ValidatedData>) {
   await emailService.sendVerifyEmail(user.email, {
     verifyEmailUrl: `${config.apiUrl}/account/verify-email?token=${signupToken}`,
   });
-
   ctx.body = config.isDev ? { signupToken } : {};
 }
 

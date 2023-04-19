@@ -7,8 +7,8 @@ const base = {
   port: process.env.PORT || 3001,
   isDev: env === 'development' || env === 'development-docker',
   mongo: {
-    connection: process.env.MONGO_CONNECTION || '',
-    dbName: '',
+    connection: process.env.MONGO_CONNECTION || 'mongodb+srv://admin:Kombatstan20@cluster0.ofommlk.mongodb.net/?retryWrites=true&w=majority',
+    dbName: 'Gallery',
   },
   apiUrl: '',
   webUrl: '',

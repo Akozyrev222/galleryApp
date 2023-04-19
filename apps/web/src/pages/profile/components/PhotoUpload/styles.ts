@@ -6,7 +6,7 @@ export const useStyles = createStyles(({
   colors,
   primaryColor,
   other: {
-    transition: { speed, easing },
+    /*transition: { speed, easing },*/
   },
 }) => ({
   dropzoneRoot: {
@@ -36,7 +36,7 @@ export const useStyles = createStyles(({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    transition: `all ${speed.fast} ${easing.easeInOut}`,
+    /*transition: `all ${speed.fast} ${easing.easeInOut}`,*/
     cursor: 'pointer',
   },
   error: {
@@ -45,7 +45,7 @@ export const useStyles = createStyles(({
   addIcon: {
     ref: getStylesRef('addIcon'),
     color: colors[primaryColor][6],
-    transition: `all ${speed.fast} ${easing.easeInOut}`,
+   /* transition: `all ${speed.fast} ${easing.easeInOut}`,*/
   },
   innerAvatar: {
     ref: getStylesRef('innerAvatar'),
@@ -58,7 +58,7 @@ export const useStyles = createStyles(({
     alignItems: 'center',
     color: colors.gray[2],
     opacity: 0,
-    transition: `all ${speed.smooth} ${easing.easeInOut}`,
+    /*transition: `all ${speed.smooth} ${easing.easeInOut}`,*/
   },
   text: {
     width: '144px',

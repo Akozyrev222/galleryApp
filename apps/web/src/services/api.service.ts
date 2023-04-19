@@ -82,6 +82,8 @@ class ApiClient {
   }
 
   post(url: string, data: any = {}, requestConfig: AxiosRequestConfig<any> = {}): Promise<any> {
+    console.log(url, 'url')
+    console.log('here')
     return this._api({
       method: 'post',
       url,

@@ -17,6 +17,7 @@ async function validator(ctx: AppKoaContext, next: Next) {
 }
 
 async function handler(ctx: AppKoaContext) {
+  console.log('here upload')
   const { user } = ctx.state;
   const { file } = ctx.request;
 

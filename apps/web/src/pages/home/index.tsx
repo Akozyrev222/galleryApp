@@ -115,6 +115,7 @@ const Home: NextPage = () => {
   }, [debouncedSearch]);
 
   const { data, isLoading: isListLoading } = userApi.useList(params);
+  console.log(data)
 
   return (
     <>

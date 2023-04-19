@@ -1,174 +1,113 @@
-import { useMemo, useCallback, useState, FC } from 'react';
+import {useMemo, useCallback, useState, FC} from 'react';
 import {
-  Table as TableContainer,
-  Checkbox,
-  Pagination,
-  Group,
-  Text,
-  Paper,
+    Table as TableContainer,
+    Checkbox,
+    Pagination,
+    Group,
+    Text,
+    Paper, Grid, Image, SimpleGrid, Stack, useMantineTheme, Skeleton, AspectRatio, StarIcon, Rating,
 } from '@mantine/core';
 import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  OnChangeFn,
-  PaginationState,
-  RowData,
-  RowSelectionState,
-  SortingState,
-  useReactTable,
+    ColumnDef,
+    flexRender,
+    getCoreRowModel,
+    getSortedRowModel,
+    OnChangeFn,
+    PaginationState,
+    RowData,
+    RowSelectionState,
+    SortingState,
+    useReactTable,
 } from '@tanstack/react-table';
-
-import Thead from './thead';
-import Tbody from './tbody';
 
 type SpacingSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 interface TableProps {
-  data: RowData[];
-  dataCount?: number;
-  columns: ColumnDef<any>[];
-  horizontalSpacing?: SpacingSizes;
-  verticalSpacing?: SpacingSizes;
-  rowSelection?: RowSelectionState;
-  setRowSelection?: OnChangeFn<RowSelectionState>;
-  sorting?: SortingState;
-  onSortingChange?: OnChangeFn<SortingState>;
-  onPageChange?: (value: Record<string, any>) => void;
-  perPage: number;
-  page?: number;
+    data: RowData[];
+    dataCount?: number;
+    columns: ColumnDef<any>[];
+    horizontalSpacing?: SpacingSizes;
+    verticalSpacing?: SpacingSizes;
+    rowSelection?: RowSelectionState;
+    setRowSelection?: OnChangeFn<RowSelectionState>;
+    sorting?: SortingState;
+    onSortingChange?: OnChangeFn<SortingState>;
+    onPageChange?: (value: Record<string, any>) => void;
+    perPage: number;
+    page?: number;
 }
 
-const Table: FC<TableProps> = ({
-  data,
-  dataCount,
-  columns,
-  horizontalSpacing = 'xl',
-  verticalSpacing = 'lg',
-  rowSelection,
-  setRowSelection,
-  sorting,
-  onSortingChange,
-  onPageChange,
-  page,
-  perPage,
-}) => {
-  const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
-    pageIndex: page || 1,
-    pageSize: perPage,
-  });
-  const isSelectable = !!rowSelection && !!setRowSelection;
-  const isSortable = useMemo(() => !!onSortingChange, [onSortingChange]);
+const ImageContainer: FC<TableProps> = ({
+                                            data,
+                                            dataCount,
+                                            columns,
+                                            horizontalSpacing = 'xl',
+                                            verticalSpacing = 'lg',
+                                            rowSelection,
+                                            setRowSelection,
+                                            sorting,
+                                            onSortingChange,
+                                            onPageChange,
+                                            page,
+                                            perPage,
+                                        }) => {
 
-  const selectableColumns: ColumnDef<unknown, any>[] = useMemo(() => [{
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={table.getIsAllRowsSelected()}
-        indeterminate={table.getIsSomeRowsSelected()}
-        onChange={table.getToggleAllRowsSelectedHandler()}
-        sx={(theme) => ({
-          ...(table.getIsSomeRowsSelected() && {
-            '& .mantine-Checkbox-input': {
-              backgroundColor: theme.colors.blue[6],
-              border: 'none',
-            },
-          }),
-          color: theme.white,
-        })}
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        indeterminate={row.getIsSomeSelected()}
-        onChange={row.getToggleSelectedHandler()}
-      />
-    ),
-  }], []);
 
-  const pagination = useMemo(() => ({
-    pageIndex,
-    pageSize,
-  }), [pageIndex, pageSize]);
-
-  const onPageChangeHandler = useCallback((currentPage: any, direction?: string) => {
-    setPagination({ pageIndex: currentPage, pageSize });
-
-    if (onPageChange) {
-      onPageChange((prev: Record<string, any>) => ({ ...prev, page: currentPage, direction }));
-    }
-  }, [onPageChange, pageSize]);
-
-  const table = useReactTable({
-    data,
-    columns: isSelectable ? [...selectableColumns, ...columns] : columns,
-    state: {
-      rowSelection,
-      sorting,
-      pagination,
-    },
-    onSortingChange,
-    onPaginationChange: onPageChangeHandler,
-    pageCount: dataCount ? Math.ceil((dataCount || 0) / perPage) : -1,
-    manualPagination: true,
-    onRowSelectionChange: setRowSelection,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-  });
-
-  const renderPagination = useCallback(() => {
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    const { pageIndex } = table.getState().pagination;
-
+    const images = [
+        {
+            src: 'https://media.istockphoto.com/id/499206036/photo/cityscape-of-minsk-belarus-summer-season-sunset-time.jpg?s=612x612&w=0&k=20&c=-Lb_1Snzj-Vg-iKlHdQ4myRSuyS7R8ow6FV3bMiSnQ0=',
+            title: 'Minsk'
+        },
+        {
+            src: 'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8&w=1000&q=80',
+            title: 'Man'
+        },
+        {
+            src: 'https://thumbs.dreamstime.com/b/beautiful-rain-forest-ang-ka-nature-trail-doi-inthanon-national-park-thailand-36703721.jpg',
+            title: 'Ladder'
+        },
+        {
+            src: 'https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+            title: 'Feather'
+        },
+        {
+            src: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Ym9va3xlbnwwfHwwfHw%3D&w=1000&q=80',
+            title: 'Book'
+        },
+    ]
     return (
-      <Pagination
-        total={table.getPageCount()}
-        page={pageIndex}
-        onChange={onPageChangeHandler}
-        color="black"
-      />
+        <>
+            <Paper radius="sm" withBorder>
+                <SimpleGrid cols={4} breakpoints={[{maxWidth: 'xs', cols: 1}]}>
+                    {/*<Grid.Col span={4}>1</Grid.Col>
+                        <Grid.Col span={4}>2</Grid.Col>
+                        <Grid.Col span={4}>3</Grid.Col>
+                        <Grid.Col span={4}>4</Grid.Col>
+                        <Grid.Col span={4}>5</Grid.Col>*/}
+                    {images.map((el, index) => {
+                            let img = document.createElement('img');
+                            img.id = 'imgId';
+                            img.src = el.src
+                            console.log(img.clientHeight)
+                            return (
+                                <Paper withBorder>
+                                    <AspectRatio ratio={150 / 200}>
+                                        <Image src={el.src}/>
+                                    </AspectRatio>
+                                    <Group position='apart'>
+                                        <Text align='center'>{el.title}</Text>
+                                        <Rating size='sm' value={1} id={el.src} />
+                                    </Group>
+                                </Paper>
+                            )
+                        }
+                    )}
+                </SimpleGrid>
+            </Paper>
+            <Group position="right">
+            </Group>
+        </>
     );
-  }, [onPageChangeHandler, table]);
-
-  return (
-    <>
-      <Paper radius="sm" withBorder>
-        <TableContainer
-          horizontalSpacing={horizontalSpacing}
-          verticalSpacing={verticalSpacing}
-        >
-          <Thead
-            isSortable={isSortable}
-            headerGroups={table.getHeaderGroups()}
-            flexRender={flexRender}
-          />
-          <Tbody
-            isSelectable={isSelectable}
-            rows={table.getRowModel().rows}
-            flexRender={flexRender}
-          />
-        </TableContainer>
-      </Paper>
-      <Group position="right">
-        {dataCount && (
-          <Text size="sm" color="dimmed">
-            Showing
-            {' '}
-            <b>{table.getRowModel().rows.length}</b>
-            {' '}
-            of
-            {' '}
-            <b>{dataCount}</b>
-            {' '}
-            results
-          </Text>
-        )}
-        {renderPagination()}
-      </Group>
-    </>
-  );
 };
 
-export default Table;
+export default ImageContainer;
